@@ -37,10 +37,10 @@ namespace TodoManager
                         Console.Write("Краен срок (дата.месец.година): " + data + mounth + year);
 
 
-                        //if  ()
-                        //{
-                        //    Console.Write("Невалидна дата. Въведи отново: ");
-                        //}
+                        if ()
+                        {
+                            Console.Write("Невалидна дата. Въведи отново: ");
+                        }
 
 
 
