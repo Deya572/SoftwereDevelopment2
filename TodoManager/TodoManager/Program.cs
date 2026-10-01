@@ -11,7 +11,7 @@ namespace TodoManager
 
             while (running)
             {
-                Console.WriteLine("---- TodoManager ----");
+                Console.WriteLine("n//---- TodoManager ----");
                 Console.WriteLine("1. Добави нова задача");
                 Console.WriteLine("2. Покажи всички задачи");
                 Console.WriteLine("3. Маркирай задача като изпълнена");
@@ -31,21 +31,23 @@ namespace TodoManager
                         Console.Write("Описание: ");
                         string description = Console.ReadLine();
 
-                        int data = int.Parse(Console.ReadLine());
-                        int mounth = int.Parse(Console.ReadLine());
-                        int year = int.Parse(Console.ReadLine());
-                        Console.Write("Краен срок (дата.месец.година): " + data + mounth + year);
+                        DateTime OverTime;
+                        Console.Write("Краен срок (дата.месец.година): "); 
+                        //int data = int.Parse(Console.ReadLine());
+                        //int mounth = int.Parse(Console.ReadLine());
+                        //int year = int.Parse(Console.ReadLine());
+                        //Console.Write("Краен срок (дата.месец.година): " + data + mounth + year);
 
+                        
 
-                        if ()
+                        while (!DateTime.TryParse (Console.ReadLine(),out OverTime))
                         {
-                            Console.Write("Невалидна дата. Въведи отново: ");
+                            Console.Write("Невалидна дата! Въведи отново: ");
                         }
 
-
-
+                        tasks.Add(new TaskItem(title, description, OverTime));
                         Console.WriteLine("Задачата е добавена успешно!");
-                        break;
+                       break;
 
                     case "2":
                         Console.WriteLine("---- Всички задачи -----");
@@ -63,40 +65,40 @@ namespace TodoManager
                             Console.WriteLine($"Задача #{i + 1}");
                             Console.WriteLine($"Заглавие: {task.Title}");
                             Console.WriteLine($"Описание: {task.Description}");
-                            Console.WriteLine($"Краен срок: {task:дата.месец. година}");
-                            //Console.WriteLine($"Статус: {(task.IsCompleted ? "Изпълнена" : "Неизпълнена")}");
-                        }
-                        if (tasks.Count > 0)
-                        {
-
+                            Console.WriteLine($"Краен срок: {task: data,mounth,year}");
+                            Console.WriteLine($"Статус: {(task.IsCompleted ? "Изпълнена" : "Неизпълнена")}");
                         }
                         break;
 
                     case "3":
-                        Console.WriteLine("===== Маркиране като изпълнена =====");
-
-                        if (tasks.Count == 0)
+                        Console.Clear();
+                        Console.WriteLine("----- Маркиране на задача -----");
+                        if (tasks.Count == 0) 
                         {
-                            Console.WriteLine("Няма въведени задачи.");
-                            ;
-                            return;
+                         Console.WriteLine("Няма въведени задачи!");
+                         
                         }
+                        
+                        Console.Write("Въведи номер на задачата: "); 
+                        int number; 
+                        if (int.TryParse(Console.ReadLine(), out number) && number >= 1 && number <= tasks.Count) 
+                        {
+                            tasks[number - 1].IsCompleted = true; 
+                            Console.WriteLine("Задачата е маркирана като изпълнена!");
+                        } 
+                        else 
+                        { 
+                            Console.WriteLine("Невалиден номер на задача!"); 
+                        }
+                        
+                        //if (tasks.Count == 0)
+                        //{
+                        //    Console.WriteLine("Няма въведени задачи.");
+                        //    ;
+                        //    return;
+                        //}
 
                         ShowTaskTitles();
-
-                        Console.Write("Въведи номер на задачата: ");
-                        int number;
-
-                        if (int.TryParse(Console.ReadLine(), out number) &&
-                            number >= 1 && number <= tasks.Count)
-                        {
-                            tasks[number - 1].IsCompleted = true;
-                            Console.WriteLine("Задачата е маркирана като изпълнена.");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Невалиден номер на задача.");
-                        }
                         break;
 
                     case "4":
@@ -106,23 +108,23 @@ namespace TodoManager
                         {
                             Console.WriteLine("Няма въведени задачи!");
 
-                            return;
+                            break;
                         }
 
                         ShowTaskTitles();
 
                         Console.Write("Въведи номер на задачата: ");
-                        //int number = 0;
+                        number = 0;
 
                         if (int.TryParse(Console.ReadLine(), out number) &&
                             number >= 1 && number <= tasks.Count)
                         {
                             tasks.RemoveAt(number - 1);
-                            Console.WriteLine("Задачата е изтрита.");
+                            Console.WriteLine("Задачата е изтрита!");
                         }
                         else
                         {
-                            Console.WriteLine("Невалиден номер на задача.");
+                            Console.WriteLine("Невалиден номер на задача!");
                         }
                         break;
 
@@ -132,7 +134,6 @@ namespace TodoManager
 
                     default:
                         Console.WriteLine("Невалиден избор!");
-                        ;
                         break;
                 }
             }
@@ -145,38 +146,6 @@ namespace TodoManager
                     Console.WriteLine($"{i + 1}. {tasks[i].Title}");
                 }
             }
-
-
-            //static void CompleteTask()
-            //{
-            //    Console.Clear();
-            //    Console.WriteLine("===== Маркиране като изпълнена =====");
-
-            //    if (tasks.Count == 0)
-            //    {
-            //        Console.WriteLine("Няма въведени задачи.");
-            //        ;
-            //        return;
-            //    }
-
-            //    ShowTaskTitles();
-
-            //    Console.Write("Въведи номер на задачата: ");
-            //    int number;
-
-            //    if (int.TryParse(Console.ReadLine(), out number) &&
-            //        number >= 1 && number <= tasks.Count)
-            //    {
-            //        tasks[number - 1].IsCompleted = true;
-            //        Console.WriteLine("Задачата е маркирана като изпълнена.");
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine("Невалиден номер на задача.");
-            //    }
-
-
-            //}
 
         }
 

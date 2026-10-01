@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,14 +11,16 @@ namespace TodoManager
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        
+
+        public DateTime OverTime { get; set; }
+
         public bool IsCompleted { get; set; }
 
-        public TaskItem(string title, string description, DateTime )
+        public TaskItem(string title, string description, DateTime OverTime )
         {
             Title = title;
             Description = description;
-            
+            OverTime = OverTime;
             IsCompleted = false;
         }
 
