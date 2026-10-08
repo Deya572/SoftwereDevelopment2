@@ -11,7 +11,10 @@ namespace TodoManager
 
             while (running)
             {
-                Console.WriteLine("n//---- TodoManager ----");
+                //string RESET = "\u001b[0m";
+                //Console.WriteLine($"{PASTEL_PINK}-------- TodoManager --------{RESET}");
+
+                Console.WriteLine("\n--- ---- TodoManager ----");
                 Console.WriteLine("1. Добави нова задача");
                 Console.WriteLine("2. Покажи всички задачи");
                 Console.WriteLine("3. Маркирай задача като изпълнена");
@@ -23,7 +26,8 @@ namespace TodoManager
                 switch (choice)
                 {
                     case "1":
-                        Console.WriteLine("---- Нова задача -----");
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("\n --- ---- Нова задача -----");
 
                         Console.Write("Заглавие: ");
                         string title = Console.ReadLine();
@@ -33,10 +37,7 @@ namespace TodoManager
 
                         DateTime OverTime;
                         Console.Write("Краен срок (дата.месец.година): "); 
-                        //int data = int.Parse(Console.ReadLine());
-                        //int mounth = int.Parse(Console.ReadLine());
-                        //int year = int.Parse(Console.ReadLine());
-                        //Console.Write("Краен срок (дата.месец.година): " + data + mounth + year);
+                        
 
                         
 
@@ -50,7 +51,8 @@ namespace TodoManager
                        break;
 
                     case "2":
-                        Console.WriteLine("---- Всички задачи -----");
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.WriteLine("\n ---- Всички задачи -----");
 
                         if (tasks.Count == 0)
                         {
@@ -71,8 +73,8 @@ namespace TodoManager
                         break;
 
                     case "3":
-                        Console.Clear();
-                        Console.WriteLine("----- Маркиране на задача -----");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\n ----- Маркиране на задача -----");
                         if (tasks.Count == 0) 
                         {
                          Console.WriteLine("Няма въведени задачи!");
@@ -90,19 +92,13 @@ namespace TodoManager
                         { 
                             Console.WriteLine("Невалиден номер на задача!"); 
                         }
-                        
-                        //if (tasks.Count == 0)
-                        //{
-                        //    Console.WriteLine("Няма въведени задачи.");
-                        //    ;
-                        //    return;
-                        //}
 
                         ShowTaskTitles();
                         break;
 
                     case "4":
-                        Console.WriteLine("---- Изтриване на задача -----");
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.WriteLine("\\n ---- Изтриване на задача -----");
 
                         if (tasks.Count == 0)
                         {
@@ -133,6 +129,7 @@ namespace TodoManager
                         break;
 
                     default:
+                        Console.WriteLine();
                         Console.WriteLine("Невалиден избор!");
                         break;
                 }
