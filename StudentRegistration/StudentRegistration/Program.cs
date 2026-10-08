@@ -49,14 +49,14 @@ namespace StudentRegistration
                     break;
                 }
 
-                   Console.WriteLine("Невалиден среден успех! Опитайте отново.");
-                }
+                Console.WriteLine("Невалиден среден успех! Опитайте отново.");
+            }
 
             //    char letter;
             //while (char.TryParse(Console.ReadLine()),out letter)
             //{
             //}
-)
+
         }
     }
 }
