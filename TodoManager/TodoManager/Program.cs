@@ -1,10 +1,13 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.ComponentModel;
+using System.Security.Cryptography.X509Certificates;
 
 namespace TodoManager
 {
     internal class Program
     {
-        static List<TaskItem> tasks = new List<TaskItem>();
+        static List<TodoItem> tasks = new List<TodoItem>();
+        private static List<TodoItem> todoItems = new List<TodoItem>();
+        private static int nextId = 1;
         static void Main(string[] args)
         {
             bool running = true;
@@ -21,7 +24,7 @@ namespace TodoManager
                 Console.WriteLine("4. Изтрий задача");
                 Console.WriteLine("5. Изход");
                 Console.Write("Избери опция: ");
-                 string choice = Console.ReadLine();
+                string choice = Console.ReadLine();
 
                 switch (choice)
                 {
@@ -29,6 +32,7 @@ namespace TodoManager
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("\n --- ---- Нова задача -----");
 
+                        
                         Console.Write("Заглавие: ");
                         string title = Console.ReadLine();
 
@@ -36,19 +40,26 @@ namespace TodoManager
                         string description = Console.ReadLine();
 
                         DateTime OverTime;
-                        Console.Write("Краен срок (дата.месец.година): "); 
+                        Console.Write("Краен срок (дата.месец.година): ");
+
+
+                        try
+                        {
+                            TotoItem.todoItem = new TodoItem(nextId, title ,description)
+                                tasks.Add(todoIte)
+                                nextId++
+                                Console.WriteLine("");
+                        }
                         
 
-                        
-
-                        while (!DateTime.TryParse (Console.ReadLine(),out OverTime))
+                        while (!DateTime.TryParse(Console.ReadLine(), out OverTime))
                         {
                             Console.Write("Невалидна дата! Въведи отново: ");
                         }
 
-                        tasks.Add(new TaskItem(title, description, OverTime));
+                        tasks.Add(new TodoItem(title, description, OverTime));
                         Console.WriteLine("Задачата е добавена успешно!");
-                       break;
+                        break;
 
                     case "2":
                         Console.ForegroundColor = ConsoleColor.Cyan;
@@ -62,7 +73,7 @@ namespace TodoManager
 
                         for (int i = 0; i < tasks.Count; i++)
                         {
-                            TaskItem task = tasks[i];
+                            TodoItem task = tasks[i];
                             Console.WriteLine();
                             Console.WriteLine($"Задача #{i + 1}");
                             Console.WriteLine($"Заглавие: {task.Title}");
@@ -75,22 +86,22 @@ namespace TodoManager
                     case "3":
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("\n ----- Маркиране на задача -----");
-                        if (tasks.Count == 0) 
+                        if (tasks.Count == 0)
                         {
-                         Console.WriteLine("Няма въведени задачи!");
-                         
+                            Console.WriteLine("Няма въведени задачи!");
+
                         }
-                        
-                        Console.Write("Въведи номер на задачата: "); 
-                        int number; 
-                        if (int.TryParse(Console.ReadLine(), out number) && number >= 1 && number <= tasks.Count) 
+
+                        Console.Write("Въведи номер на задачата: ");
+                        int number;
+                        if (int.TryParse(Console.ReadLine(), out number) && number >= 1 && number <= tasks.Count)
                         {
-                            tasks[number - 1].IsCompleted = true; 
+                            tasks[number - 1].IsCompleted = true;
                             Console.WriteLine("Задачата е маркирана като изпълнена!");
-                        } 
-                        else 
-                        { 
-                            Console.WriteLine("Невалиден номер на задача!"); 
+                        }
+                        else
+                        {
+                            Console.WriteLine("Невалиден номер на задача!");
                         }
 
                         ShowTaskTitles();
@@ -144,7 +155,11 @@ namespace TodoManager
                 }
             }
 
+       
+
+    
         }
+        
 
     }
 }

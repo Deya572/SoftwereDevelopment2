@@ -7,6 +7,15 @@ namespace StudentRegistration
     {
         static void Main(string[] arg)
         {
+
+            Console.WriteLine("Начало на програмата");
+
+            Console.Write("Въведете число: ");
+            int number = int.Parse(Console.ReadLine());
+
+            Console.WriteLine($"Въведохте: {number}");
+
+            Console.WriteLine("Край на програмата");
             ////godini
             //Console.Write("Enter age: ");
             //if (int.TryParse(Console.ReadLine(), out int age) || (int.TryParse(Console.ReadLine(), out int grade));
@@ -30,27 +39,27 @@ namespace StudentRegistration
             //}
 
             //sreden uspeh
-            double average;
-            while (true)
-            {
-                Console.Write("Среден успех: ");
+            //double average;
+            //while (true)
+            //{
+            //    Console.Write("Среден успех: ");
 
-                string input = Console.ReadLine();
+            //    string input = Console.ReadLine();
 
 
-                input = input.Replace(',', '.');
+            //    input = input.Replace(',', '.');
 
-                if (double.TryParse(
-                    input,
-                    NumberStyles.Float,
-                    CultureInfo.InvariantCulture,
-                    out average))
-                {
-                    break;
-                }
+            //    if (double.TryParse(
+            //        input,
+            //        NumberStyles.Float,
+            //        CultureInfo.InvariantCulture,
+            //        out average))
+            //    {
+            //        break;
+            //    }
 
-                Console.WriteLine("Невалиден среден успех! Опитайте отново.");
-            }
+            //    Console.WriteLine("Невалиден среден успех! Опитайте отново.");
+            //}
 
             //    char letter;
             //while (char.TryParse(Console.ReadLine()),out letter)
