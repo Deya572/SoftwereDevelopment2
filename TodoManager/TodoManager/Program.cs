@@ -45,9 +45,9 @@ namespace TodoManager
 
                         try
                         {
-                            TotoItem.todoItem = new TodoItem(nextId, title ,description)
-                                tasks.Add(todoIte)
-                                nextId++
+                            TotoItem todoItem = new TodoItem(nextId, title, description);
+                                tasks.Add(todoIte);
+                            nextId++;
                                 Console.WriteLine("");
                         }
                         
