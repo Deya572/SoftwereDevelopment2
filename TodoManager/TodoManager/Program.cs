@@ -5,161 +5,146 @@ namespace TodoManager
 {
     internal class Program
     {
-        static List<TodoItem> tasks = new List<TodoItem>();
-        private static List<TodoItem> todoItems = new List<TodoItem>();
-        private static int nextId = 1;
+        static TodoSurvice service = new TodoSurvice();
+      
         static void Main(string[] args)
         {
-            bool running = true;
-
-            while (running)
+            while (true)
             {
-                //string RESET = "\u001b[0m";
-                //Console.WriteLine($"{PASTEL_PINK}-------- TodoManager --------{RESET}");
-
-                Console.WriteLine("\n--- ---- TodoManager ----");
-                Console.WriteLine("1. Добави нова задача");
-                Console.WriteLine("2. Покажи всички задачи");
+                Console.Clear();
+                Console.WriteLine();
+                Console.WriteLine("======= TODO MANAGER ========");
+                Console.WriteLine("1. Добави задача");
+                Console.WriteLine("2. Покажи задачи");
                 Console.WriteLine("3. Маркирай задача като изпълнена");
                 Console.WriteLine("4. Изтрий задача");
-                Console.WriteLine("5. Изход");
-                Console.Write("Избери опция: ");
+                Console.WriteLine("x. Изход");
+
+                Console.WriteLine();
+                Console.Write("Избор: ");
                 string choice = Console.ReadLine();
-
-                switch (choice)
+                try
                 {
-                    case "1":
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("\n --- ---- Нова задача -----");
-
-                        
-                        Console.Write("Заглавие: ");
-                        string title = Console.ReadLine();
-
-                        Console.Write("Описание: ");
-                        string description = Console.ReadLine();
-
-                        DateTime OverTime;
-                        Console.Write("Краен срок (дата.месец.година): ");
-
-
-                        try
-                        {
-                            TotoItem todoItem = new TodoItem(nextId, title, description);
-                                tasks.Add(todoIte);
-                            nextId++;
-                                Console.WriteLine("");
-                        }
-                        
-
-                        while (!DateTime.TryParse(Console.ReadLine(), out OverTime))
-                        {
-                            Console.Write("Невалидна дата! Въведи отново: ");
-                        }
-
-                        tasks.Add(new TodoItem(title, description, OverTime));
-                        Console.WriteLine("Задачата е добавена успешно!");
-                        break;
-
-                    case "2":
-                        Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.WriteLine("\n ---- Всички задачи -----");
-
-                        if (tasks.Count == 0)
-                        {
-                            Console.WriteLine("Няма въведени задачи!");
-                            return;
-                        }
-
-                        for (int i = 0; i < tasks.Count; i++)
-                        {
-                            TodoItem task = tasks[i];
-                            Console.WriteLine();
-                            Console.WriteLine($"Задача #{i + 1}");
-                            Console.WriteLine($"Заглавие: {task.Title}");
-                            Console.WriteLine($"Описание: {task.Description}");
-                            Console.WriteLine($"Краен срок: {task: data,mounth,year}");
-                            Console.WriteLine($"Статус: {(task.IsCompleted ? "Изпълнена" : "Неизпълнена")}");
-                        }
-                        break;
-
-                    case "3":
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("\n ----- Маркиране на задача -----");
-                        if (tasks.Count == 0)
-                        {
-                            Console.WriteLine("Няма въведени задачи!");
-
-                        }
-
-                        Console.Write("Въведи номер на задачата: ");
-                        int number;
-                        if (int.TryParse(Console.ReadLine(), out number) && number >= 1 && number <= tasks.Count)
-                        {
-                            tasks[number - 1].IsCompleted = true;
-                            Console.WriteLine("Задачата е маркирана като изпълнена!");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Невалиден номер на задача!");
-                        }
-
-                        ShowTaskTitles();
-                        break;
-
-                    case "4":
-                        Console.ForegroundColor = ConsoleColor.Magenta;
-                        Console.WriteLine("\\n ---- Изтриване на задача -----");
-
-                        if (tasks.Count == 0)
-                        {
-                            Console.WriteLine("Няма въведени задачи!");
-
-                            break;
-                        }
-
-                        ShowTaskTitles();
-
-                        Console.Write("Въведи номер на задачата: ");
-                        number = 0;
-
-                        if (int.TryParse(Console.ReadLine(), out number) &&
-                            number >= 1 && number <= tasks.Count)
-                        {
-                            tasks.RemoveAt(number - 1);
-                            Console.WriteLine("Задачата е изтрита!");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Невалиден номер на задача!");
-                        }
-                        break;
-
-                    case "5":
-                        running = false;
-                        break;
-
-                    default:
-                        Console.WriteLine();
-                        Console.WriteLine("Невалиден избор!");
-                        break;
+                    switch (choice)
+                    {
+                        case "1": { AddTodo(); break; }
+                        case "2": { ListAllTodos(); break; }
+                        case "3": { CompleteTodo(); break; }
+                        case "4": { DeleteTodo(); break; }
+                        case "x": { Console.WriteLine("Край на програмата"); Console.ReadLine(); return; }
+                        default: { Console.WriteLine("Невалиден избор."); break; }
+                    }
                 }
-            }
-
-
-            static void ShowTaskTitles()
-            {
-                for (int i = 0; i < tasks.Count; i++)
+                catch (ArgumentOutOfRangeException ex)
                 {
-                    Console.WriteLine($"{i + 1}. {tasks[i].Title}");
+                    Console.WriteLine(ex.Message);
                 }
+                catch (InvalidOperationException ex)
+                {
+                    Console.WriteLine(ex.Message);
+
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                Console.ReadLine();
             }
-
-       
-
-    
         }
-        
+
+        private static void DeleteTodo()
+        {
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine("=====  Изтрий задача =======\n");
+            ListAllTodos();
+
+            Console.Write("Избери Id: ");
+            int id;
+            while (!int.TryParse(Console.ReadLine(), out id))
+            {
+                Console.WriteLine("Невалидно id.");
+                Console.Write("Избери Id: ");
+            }
+
+            //TodoItem deleteTask = FindById(id);
+
+            // tasks.Remove(deleteTask);
+            //Console.WriteLine("Задачата е изтрита.");
+
+        }
+
+        private static void CompleteTodo()
+        {
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine("=====  Маркирай задача като завършена =======\n");
+            ListAllTodos();
+
+            Console.Write("Избери Id: ");
+            int id;
+            while (!int.TryParse(Console.ReadLine(), out id))
+            {
+                Console.WriteLine("Невалидно id.");
+                Console.Write("Избери Id: ");
+            }
+            service.Complite(id);
+
+            Console.WriteLine("Задачата е завършена.");
+
+
+        }
+
+        private static void ListAllTodos()
+        {
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine("===== Всички задачи  =======");
+
+            var todos = service.GetAll();
+            if (todos.Count == 0)
+            {
+                Console.WriteLine("Няма въведени задачи");
+            }
+            else
+            {
+                foreach (TodoItem todoItem in todos)
+                {
+                    Console.WriteLine($"{todoItem}");
+                }
+            }
+        }
+
+
+
+        private static void AddTodo()
+        {
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine("=====  Добавяне на задача =======");
+
+            Console.Write("Заглавие:");
+            string title = Console.ReadLine();
+
+            Console.Write("Описание:");
+            string description = Console.ReadLine();
+
+            Console.Write("Краен срок:");
+            DateTime dueDate;
+            while (!DateTime.TryParse(Console.ReadLine(), out dueDate))
+            {
+                Console.WriteLine("Невалидна дата.Въведи отово!");
+                Console.Write("Краен срок: ");
+            }
+
+            service.Add(title, description, dueDate);
+
+            Console.WriteLine("Задачата е добавена.");
+
+        }
+
+
+
 
     }
 }
